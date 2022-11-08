@@ -80,7 +80,8 @@ typings/
 
 # Nuxt.js build / generate output
 .nuxt
-dist
+# >>>>>>>>>>>>>>  temporarily remove so git will track <<<<<<<<<<<<<<<<
+# dist
 
 # Gatsby files
 .cache/
