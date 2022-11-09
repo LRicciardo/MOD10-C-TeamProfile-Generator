@@ -1,130 +1,4 @@
-//  creates the html for the team profile page
-// Each role gets their own style card
 
-const renderMgrCard = ({id, name, email, phone, role}) => {
-    return `           
-            <div class="card bg-light border-danger m-2" style="width: 20rem;">
-            <h3 class="card-title bg-danger text-light text-center">
-                <i class="fa-solid fa-puzzle-piece"></i>
-                ${role}
-            </h3>
-            <div class="card-body">
-                <p class="card-text">
-                <i class="fa-solid fa-user"></i>
-                Name: 
-                <span>${name}</span>
-                </p>
-                <p class="card-text">
-                <i class="fa-solid fa-hashtag"></i>
-                EID: 
-                <span>${id}</span>
-                </p>
-                <p class="card-text">
-                <i class="fa-regular fa-at"></i> 
-                Email: 
-                <span><a href="mailto:${email}">${email}</a></span>
-                </p>
-                <p class="card-text">
-                <i class="fa-solid fa-square-phone"></i> 
-                Office Number: 
-                <span>${phone}</span>
-                </p>
-            </div>
-            </div>
-        `
-}
-
-const renderEngCard = ({id, name, email, github, role}) => {
-    return `              
-            <div class="card bg-light border-primary m-2" style="width: 20rem;">
-            <h3 class="card-title bg-primary text-light text-center">
-                <i class="fa-solid fa-puzzle-piece"></i>
-                ${role}
-            </h3>
-            <div class="card-body">
-                <p class="card-text">
-                <i class="fa-solid fa-user"></i>
-                Name: 
-                <span>${name}</span>
-                </p>
-                <p class="card-text">
-                <i class="fa-solid fa-hashtag"></i>
-                EID: 
-                <span>${id}</span>
-                </p>
-                <p class="card-text">
-                <i class="fa-regular fa-at"></i> 
-                Email: 
-                <span><a href="mailto:${email}">${email}</a></span>
-                </p>
-                <p class="card-text">
-                <i class="fa-brands fa-github"></i>
-                GitHub Link: 
-                <span><a href="https://github.com/${github}?tab=repositories">${github}</a></span>
-                </p>
-            </div>
-            </div>
-        `
-}
-
-const renderIntCard = ({id, name, email, schoolName, role}) => {
-    return `           
-            <div class="card bg-light border-warning m-2" style="width: 20rem;">
-                <h3 class="card-title bg-warning text-light text-center">
-                    <i class="fa-solid fa-puzzle-piece"></i>
-                    ${role}
-                </h3>
-                <div class="card-body">
-                    <p class="card-text">
-                    <i class="fa-solid fa-user"></i>
-                    Name: 
-                    <span>${name}</span>
-                    </p>
-                    <p class="card-text">
-                    <i class="fa-solid fa-hashtag"></i>
-                    EID: 
-                    <span>${id} </span>
-                    </p>
-                    <p class="card-text">
-                    <i class="fa-regular fa-at"></i> 
-                    Email: 
-                    <span><a href="mailto:${email}">${email}</a></span>
-                    </p>
-                    <p class="card-text">
-                    <i class="fa-solid fa-chalkboard-user"></i> 
-                    SchoolName: 
-                    <span id="intSchool">${schoolName}</span>
-                    </p>
-                </div>
-            </div>
-        `
-}
-
-const renderTeamCards = (team) => {
-  const teamCards = [];
-  for (member of team) {
-    console.log(member);
-    switch (member.getRole()) {
-        case "Manager":
-            teamCards.push(renderMgrCard(member));
-            break;
-        case "Engineer":
-            teamCards.push(renderEngCard(member));
-            break;
-        case "Intern":
-            teamCards.push(renderIntCard(member));
-            break;
-        default:
-            console.log("renderTeamCards => Unknown member", member)
-            break;
-    }
-  }
-  console.log(teamCards);
-  return teamCards.join("");
-}
-
-const renderHtml = (team, teamName, teamPurpose) => {
-    return `
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -155,13 +29,129 @@ const renderHtml = (team, teamName, teamPurpose) => {
   <body>
     <div class="jumbotron bg-success text-center text-white">
 
-      <h1 class="display-4 font-weight-bold">${teamName} Profile Page</h1>
-      <p class="display-5 font-weight-bolder font-italic">${teamPurpose}</p>
+      <h1 class="display-4 font-weight-bold">Awesome Development Team Profile Page</h1>
+      <p class="display-5 font-weight-bolder font-italic">We work together to create awesome designs.</p>
     </div>
-    <div class="container-fluid d-flex">
+    <div class="container-fluid d-flex flex-wrap">
       <div class="container justify-content-center">
           <div class="row">    
-            ${renderTeamCards(team)}
+                       
+            <div class="card bg-light border-danger m-2" style="width: 20rem;">
+            <h3 class="card-title bg-danger text-light text-center">
+                <i class="fa-solid fa-puzzle-piece"></i>
+                Manager
+            </h3>
+            <div class="card-body">
+                <p class="card-text">
+                <i class="fa-solid fa-user"></i>
+                Name: 
+                <span>Terrific Turner</span>
+                </p>
+                <p class="card-text">
+                <i class="fa-solid fa-hashtag"></i>
+                EID: 
+                <span>12345</span>
+                </p>
+                <p class="card-text">
+                <i class="fa-regular fa-at"></i> 
+                Email: 
+                <span><a href="mailto:Turner.Terri@co.org">Turner.Terri@co.org</a></span>
+                </p>
+                <p class="card-text">
+                <i class="fa-solid fa-square-phone"></i> 
+                Office Number: 
+                <span>7131234567</span>
+                </p>
+            </div>
+            </div>
+                      
+            <div class="card bg-light border-primary m-2" style="width: 20rem;">
+            <h3 class="card-title bg-primary text-light text-center">
+                <i class="fa-solid fa-puzzle-piece"></i>
+                Engineer
+            </h3>
+            <div class="card-body">
+                <p class="card-text">
+                <i class="fa-solid fa-user"></i>
+                Name: 
+                <span>Eghert Edwards</span>
+                </p>
+                <p class="card-text">
+                <i class="fa-solid fa-hashtag"></i>
+                EID: 
+                <span>64835</span>
+                </p>
+                <p class="card-text">
+                <i class="fa-regular fa-at"></i> 
+                Email: 
+                <span><a href="mailto:Edwards.Eghert@co.org">Edwards.Eghert@co.org</a></span>
+                </p>
+                <p class="card-text">
+                <i class="fa-brands fa-github"></i>
+                GitHub Link: 
+                <span><a href="https://github.com/LRicciardo?tab=repositories">LRicciardo</a></span>
+                </p>
+            </div>
+            </div>
+                      
+            <div class="card bg-light border-primary m-2" style="width: 20rem;">
+            <h3 class="card-title bg-primary text-light text-center">
+                <i class="fa-solid fa-puzzle-piece"></i>
+                Engineer
+            </h3>
+            <div class="card-body">
+                <p class="card-text">
+                <i class="fa-solid fa-user"></i>
+                Name: 
+                <span>Penelope Plum</span>
+                </p>
+                <p class="card-text">
+                <i class="fa-solid fa-hashtag"></i>
+                EID: 
+                <span>47659</span>
+                </p>
+                <p class="card-text">
+                <i class="fa-regular fa-at"></i> 
+                Email: 
+                <span><a href="mailto:Plum.Penny@co.org">Plum.Penny@co.org</a></span>
+                </p>
+                <p class="card-text">
+                <i class="fa-brands fa-github"></i>
+                GitHub Link: 
+                <span><a href="https://github.com/LRicciardo?tab=repositories">LRicciardo</a></span>
+                </p>
+            </div>
+            </div>
+                   
+            <div class="card bg-light border-warning m-2" style="width: 20rem;">
+                <h3 class="card-title bg-warning text-light text-center">
+                    <i class="fa-solid fa-puzzle-piece"></i>
+                    Intern
+                </h3>
+                <div class="card-body">
+                    <p class="card-text">
+                    <i class="fa-solid fa-user"></i>
+                    Name: 
+                    <span>Ian Ingalls</span>
+                    </p>
+                    <p class="card-text">
+                    <i class="fa-solid fa-hashtag"></i>
+                    EID: 
+                    <span>71548 </span>
+                    </p>
+                    <p class="card-text">
+                    <i class="fa-regular fa-at"></i> 
+                    Email: 
+                    <span><a href="mailto:Ingalls.Ian@co.org">Ingalls.Ian@co.org</a></span>
+                    </p>
+                    <p class="card-text">
+                    <i class="fa-solid fa-chalkboard-user"></i> 
+                    SchoolName: 
+                    <span id="intSchool">Indiana State University</span>
+                    </p>
+                </div>
+            </div>
+        
          </div>
       </div>
     </div>   
@@ -188,6 +178,3 @@ const renderHtml = (team, teamName, teamPurpose) => {
     <script src="./assets/js/script.js"></script>
   </body>
 </html>
-`};
-
-module.exports = renderHtml
