@@ -1,8 +1,12 @@
 const inquirer = require("inquirer");
+const { writeFile } = require("fs").promises;
+const { appendFile } = require("fs").promises;
+const fs = require("fs");
 // const Employee = require("./lib/employee");
 const Manager = require("./lib/manager");
 const Engineer = require("./lib/engineer");
 const Intern = require("./lib/intern");
+const HTMLBase = require("./lib/html");
 
 // Team array will hold the team Members
 let teamName = null;
@@ -143,9 +147,15 @@ const buildEmployee = async() => {
 
 }
 
-function writeToFile(fileName,data) {
-    writeFile(fileName, data, (err) =>
-    err ? console.log(err) : console.log(`Successfully created $(fileName)`)
+const appendToFile = async (fileName,data) => {
+    return await appendFile(fileName, data, (err) =>
+    err ? console.log(err) : console.log(`Successfully created ${fileName}`)
+  );
+}
+
+const writeToFile = async (fileName,data) => {
+    return await writeFile(fileName, data, (err) =>
+    err ? console.log(err) : console.log(`Successfully created ${fileName}`)
   );
 }
 
@@ -181,6 +191,8 @@ const testTeam = [{
   ]
 
 const createTeamPage = () => {
+    
+
     for (member of team) {
         console.log(member)
     }
