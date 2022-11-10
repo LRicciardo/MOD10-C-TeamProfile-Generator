@@ -1,99 +1,99 @@
 //  creates the html for the team profile page
 // Each role gets their own style card
 
-const renderMgrCard = ({id, name, email, phone, role}) => {
+const renderMgrCard = (member) => {
     return `           
             <div class="card bg-light border-danger m-2" style="width: 20rem;">
             <h3 class="card-title bg-danger text-light text-center">
                 <i class="fa-solid fa-puzzle-piece"></i>
-                ${role}
+                ${member.getRole()}
             </h3>
             <div class="card-body">
                 <p class="card-text">
                 <i class="fa-solid fa-user"></i>
                 Name: 
-                <span>${name}</span>
+                <span>${member.getName()}</span>
                 </p>
                 <p class="card-text">
                 <i class="fa-solid fa-hashtag"></i>
                 EID: 
-                <span>${id}</span>
+                <span>${member.getId()}</span>
                 </p>
                 <p class="card-text">
                 <i class="fa-regular fa-at"></i> 
                 Email: 
-                <span><a href="mailto:${email}">${email}</a></span>
+                <span><a href="mailto:${member.getEmail()}">${member.getEmail()}</a></span>
                 </p>
                 <p class="card-text">
                 <i class="fa-solid fa-square-phone"></i> 
                 Office Number: 
-                <span>${phone}</span>
+                <span>${member.getPhone()}</span>
                 </p>
             </div>
             </div>
         `
 }
 
-const renderEngCard = ({id, name, email, github, role}) => {
+const renderEngCard = (member) => {
     return `              
             <div class="card bg-light border-primary m-2" style="width: 20rem;">
             <h3 class="card-title bg-primary text-light text-center">
                 <i class="fa-solid fa-puzzle-piece"></i>
-                ${role}
+                ${member.getRole()}
             </h3>
             <div class="card-body">
                 <p class="card-text">
                 <i class="fa-solid fa-user"></i>
                 Name: 
-                <span>${name}</span>
+                <span>${member.getName()}</span>
                 </p>
                 <p class="card-text">
                 <i class="fa-solid fa-hashtag"></i>
                 EID: 
-                <span>${id}</span>
+                <span>${member.getId()}</span>
                 </p>
                 <p class="card-text">
                 <i class="fa-regular fa-at"></i> 
                 Email: 
-                <span><a href="mailto:${email}">${email}</a></span>
+                <span><a href="mailto:${member.getEmail()}">${member.getEmail()}</a></span>
                 </p>
                 <p class="card-text">
                 <i class="fa-brands fa-github"></i>
                 GitHub Link: 
-                <span><a href="https://github.com/${github}?tab=repositories">${github}</a></span>
+                <span><a href="https://github.com/${member.getGithub()}?tab=repositories">${member.getGithub()}</a></span>
                 </p>
             </div>
             </div>
         `
 }
 
-const renderIntCard = ({id, name, email, schoolName, role}) => {
+const renderIntCard = (member) => {
     return `           
             <div class="card bg-light border-warning m-2" style="width: 20rem;">
                 <h3 class="card-title bg-warning text-light text-center">
                     <i class="fa-solid fa-puzzle-piece"></i>
-                    ${role}
+                    ${member.getRole()}
                 </h3>
                 <div class="card-body">
                     <p class="card-text">
                     <i class="fa-solid fa-user"></i>
                     Name: 
-                    <span>${name}</span>
+                    <span>${member.getName()}</span>
                     </p>
                     <p class="card-text">
                     <i class="fa-solid fa-hashtag"></i>
                     EID: 
-                    <span>${id} </span>
+                    <span>${member.getId()}</span>
                     </p>
                     <p class="card-text">
                     <i class="fa-regular fa-at"></i> 
                     Email: 
-                    <span><a href="mailto:${email}">${email}</a></span>
+                    <span><a href="mailto:${member.getEmail()}">${member.getEmail()}</a></span>
                     </p>
                     <p class="card-text">
                     <i class="fa-solid fa-chalkboard-user"></i> 
                     SchoolName: 
-                    <span id="intSchool">${schoolName}</span>
+                    <span id="intSchool">${member.getSchool()}</span>
                     </p>
                 </div>
             </div>
@@ -103,8 +103,7 @@ const renderIntCard = ({id, name, email, schoolName, role}) => {
 const renderTeamCards = (team) => {
   const teamCards = [];
   for (member of team) {
-    console.log(member);
-    switch (member.getRole()) {
+      switch (member.getRole()) {
         case "Manager":
             teamCards.push(renderMgrCard(member));
             break;
@@ -119,7 +118,6 @@ const renderTeamCards = (team) => {
             break;
     }
   }
-  console.log(teamCards);
   return teamCards.join("");
 }
 

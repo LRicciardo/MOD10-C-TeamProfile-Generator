@@ -1,9 +1,12 @@
-const Employee = require("../employee");
+const Employee = require("../lib/employee");
 
-const employee = new Employee(12345, "Test Name", "Name.Test@co.org");
 test("test Employee constructor values", () => {
+  const employee = new Employee(12345, "Test Name", "Name.Test@co.org");
   expect(employee.id).toBe(12345);
   expect(employee.name).toBe("Test Name");
   expect(employee.email).toBe("Name.Test@co.org");
-  expect(getRole(employee)).toBe("Employee");
+});
+describe("getRole", () => {
+  const employee = new Employee(12345, "Test Name", "Name.Test@co.org");
+    expect(employee.getRole()).toBe("Employee");
 });

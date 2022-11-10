@@ -1,12 +1,11 @@
 const inquirer = require("inquirer");
 const { writeFile } = require("fs").promises;
-const { appendFile } = require("fs").promises;
 const fs = require("fs");
 // const Employee = require("./lib/employee");
 const Manager = require("./lib/manager");
 const Engineer = require("./lib/engineer");
 const Intern = require("./lib/intern");
-const renderHtml = require("./lib/html");
+const renderHtml = require("./src/html");
 
 // Team array will hold the team Members
 let teamName = null;
@@ -38,7 +37,6 @@ const startBuild = async () => {
     );
 };
 const choices = ["Manager", "Engineer", "Intern", "DONE"];
-let teamIsDone = false;
 let teamRole = null;
 
 const roleQuery = [
@@ -50,22 +48,26 @@ const roleQuery = [
     choices: choices
   }
 ];
+
+const displayDone = () => {
+  console.log("(**************************************)");
+  console.log("(* Finished entering the team members *)");
+  console.log("(*    Building the HTML page          *)");
+  console.log("(**************************************)");
+}
+
 const buildTeam = async () => {
   return await inquirer
     .prompt(roleQuery)
     .then((answers) => {
       if (answers.role === "DONE") {
-        teamIsDone = true;
-        // console.log("teamName", teamName);
-        // console.log("teamPurpose", teamPurpose);
-        // console.log("team", team);
+        displayDone();
         writeToFile(
           "./dist/index.html",
           `${renderHtml(team, teamName, teamPurpose)}`
         );
       } else {
         teamRole = answers.role;
-        teamIsDone = false;
         // takes "Manager" out of choices
         if (answers.role === "Manager") {
           choices.shift();
@@ -85,9 +87,18 @@ const employeeQuery = [
     message: "Enter Employee Name:"
   },
   {
-    type: "number",
+    type: "input",
     name: "id",
-    message: "Enter Employee Id:"
+    message: "Enter Employee Id:",
+    validate(value) {
+      const pass = value.match(
+        /^(\d{5})$/
+      );
+      if (pass) {
+        return true;
+      }
+      return "Please enter a 5-digit employee id";
+    }
   },
   {
     type: "input",
@@ -108,7 +119,6 @@ const employeeQuery = [
     name: "phone",
     message: "Enter Team Manager Office Number:",
     when(answer) {
-      // console.log(answer, "line 83")
       return teamRole === "Manager";
     },
     validate(value) {
@@ -140,16 +150,14 @@ const employeeQuery = [
 ];
 
 const buildEmployee = async () => {
+  console.log("  ");
   console.log(` >>>>>  Enter ${teamRole} Team Member <<<<<`);
   return await inquirer
     .prompt(employeeQuery)
     .then((answer) => {
-      // console.log("line 119");
-      // console.log(answer);
-      // console.log(typeof answer);
       if (teamRole === "Manager") {
-        const { id, name, email, phone } = answer;
-        let manager = new Manager(id, name, email, phone);
+        const { id, name, email, officeNumber } = answer;
+        let manager = new Manager(id, name, email, officeNumber);
         team.push(manager);
       }
       if (teamRole === "Engineer") {
@@ -162,8 +170,6 @@ const buildEmployee = async () => {
         let intern = new Intern(id, name, email, schoolName);
         team.push(intern);
       }
-      // console.log("line 155 team array");
-      // console.log(team);
       buildTeam();
     })
     .catch((err) =>
