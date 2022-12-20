@@ -11,11 +11,12 @@ const renderHtml = require("./src/html");
 let teamName = null;
 let teamPurpose = null;
 let team = [];
+let empId = [];
 
 const startQuery = [
   {
     type: "input",
-    name: "team",
+    name: "teamName",
     message: "What is the name of the Team?"
   },
   {
@@ -28,7 +29,7 @@ const startBuild = async () => {
   return await inquirer
     .prompt(startQuery)
     .then((answers) => {
-      teamName = answers.team;
+      teamName = answers.teamName;
       teamPurpose = answers.teamPurpose;
       buildTeam();
     })
@@ -37,7 +38,7 @@ const startBuild = async () => {
     );
 };
 const choices = ["Manager", "Engineer", "Intern", "DONE"];
-let teamRole = null;
+let empRole = null;
 
 const roleQuery = [
   {
@@ -67,7 +68,7 @@ const buildTeam = async () => {
           `${renderHtml(team, teamName, teamPurpose)}`
         );
       } else {
-        teamRole = answers.role;
+        empRole = answers.role;
         // takes "Manager" out of choices
         if (answers.role === "Manager") {
           choices.shift();
@@ -89,14 +90,19 @@ const employeeQuery = [
   {
     type: "input",
     name: "id",
-    message: "Enter Employee Id:",
+    message: "Enter 5-digit Employee Id :",
     validate(value) {
       const pass = value.match(
         /^(\d{5})$/
       );
       if (pass) {
-        return true;
-      }
+        let idx = empId.indexOf(value);
+        if (idx == -1) {
+          empId.push(value);
+          return true;
+        };
+        return "Please enter a unique 5-digit employee id";
+      };
       return "Please enter a 5-digit employee id";
     }
   },
@@ -116,10 +122,10 @@ const employeeQuery = [
   },
   {
     type: "input",
-    name: "phone",
+    name: "officeNumber",
     message: "Enter Team Manager Office Number:",
     when(answer) {
-      return teamRole === "Manager";
+      return empRole === "Manager";
     },
     validate(value) {
       const pass = value.match(
@@ -128,7 +134,7 @@ const employeeQuery = [
       if (pass) {
         return true;
       }
-      return "Please enter a valid phone number";
+      return "Please enter a valid office number";
     }
   },
   {
@@ -136,7 +142,7 @@ const employeeQuery = [
     name: "github",
     message: "Enter Engineer GitHub user name:",
     when(answer) {
-      return teamRole === "Engineer";
+      return empRole === "Engineer";
     }
   },
   {
@@ -144,28 +150,28 @@ const employeeQuery = [
     name: "schoolName",
     message: "Enter Intern school name:",
     when(answer) {
-      return teamRole === "Intern";
+      return empRole === "Intern";
     }
   }
 ];
 
 const buildEmployee = async () => {
   console.log("  ");
-  console.log(` >>>>>  Enter ${teamRole} Team Member <<<<<`);
+  console.log(` >>>>>  Enter ${empRole} Team Member <<<<<`);
   return await inquirer
     .prompt(employeeQuery)
     .then((answer) => {
-      if (teamRole === "Manager") {
+      if (empRole === "Manager") {
         const { id, name, email, officeNumber } = answer;
         let manager = new Manager(id, name, email, officeNumber);
         team.push(manager);
       }
-      if (teamRole === "Engineer") {
+      if (empRole === "Engineer") {
         const { id, name, email, github } = answer;
         let engineer = new Engineer(id, name, email, github);
         team.push(engineer);
       }
-      if (teamRole === "Intern") {
+      if (empRole === "Intern") {
         const { id, name, email, schoolName } = answer;
         let intern = new Intern(id, name, email, schoolName);
         team.push(intern);
